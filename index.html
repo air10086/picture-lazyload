@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+        img {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width: 500px; overflow: hidden; margin: auto ">
+        <img data-src="http://img.bimg.126.net/photo/ZZ5EGyuUCp9hBPk6_s4Ehg==/5727171351132208489.jpg" alt="loading" />
+        <img data-src="http://img.daimg.com/uploads/allimg/120302/3-1203021T03E04.jpg" alt="loading" />
+        <img data-src="http://pic2.ooopic.com/12/40/58/18bOOOPIC9c.jpg" alt="loading" />
+        <img data-src="http://img.bimg.126.net/photo/V6nNeq8YN2xPBRxTz8w4VA==/5776429472056759812.jpg" alt="loading" />
+    </div>
+    <script>
+        /**
+        方法一： 计算可视区窗口高度和滚动条滚过高度是否大于图片距离顶部的大小，如果是就把data-src中的资源放到src中
+        **/
+        // var imgs = document.querySelectorAll("img"); // 拿到页面中的所有图片
+        // window.onload = window.onscroll = function () {
+        //        ifLoad(imgs);
+        // }
+
+        // function ifLoad(imgs) {
+        //     var h = window.innerHeight;
+        //     var s = document.documentElement.scrollTop || document.body.scrollTop;
+        //     imgs.forEach((item,i) => {
+        //         console.log(s);
+        //         if(h + s > getTop(imgs[i])) {
+        //             imgs[i].src = imgs[i].getAttribute('data-src');
+        //         }
+        //     });
+        // }
+
+        // function getTop(e) {
+        //     var T = e.offsetTop;
+        //     while(T === e.offsetParent) {
+        //         T += e.offsetTop;
+        //     }
+        //     return T;
+
+        // }
+
+        /**
+        方法二：通过getBoundingClientRect()方法来获取元素的大小以及位置 
+        
+        **/
+        // window.onload = window.onscroll = function() {
+        //     const imgs = document.querySelectorAll('img');
+        //     imgs.forEach((item,i) => {
+        //         let bound = imgs[i].getBoundingClientRect();
+        //         console.log(bound);
+        //         const clientHeight = window.innerHeight;
+        //         if(bound.top <=clientHeight) {
+        //             imgs[i].src = imgs[i].getAttribute('data-src');
+        //         }               
+        //     });
+        // };
+
+        /**
+         *方法三：通过IntersectionObserver接口实现，ioes是intersectionObserver对象
+         **/
+        
+        window.onload = function () {
+            const io = new IntersectionObserver(ioes => {
+            ioes.forEach(ios => {
+                const el = ios.target;
+                const intersectionRatio1 = ios.intersectionRatio;
+                if(intersectionRatio1 > 0 && intersectionRatio1 <= 1) {
+                    console.log(intersectionRatio1);
+                    el.src = el.getAttribute('data-src');
+                }
+            });
+        });
+            const imgs = Array.from(document.querySelectorAll('img'));
+            imgs.forEach(item => {
+                io.observe(item);
+            });
+        }
+    </script>
+</body>
+
+</html>
