@@ -54,38 +54,38 @@
         方法二：通过getBoundingClientRect()方法来获取元素的大小以及位置 
         
         **/
-        // window.onload = window.onscroll = function() {
-        //     const imgs = document.querySelectorAll('img');
-        //     imgs.forEach((item,i) => {
-        //         let bound = imgs[i].getBoundingClientRect();
-        //         console.log(bound);
-        //         const clientHeight = window.innerHeight;
-        //         if(bound.top <=clientHeight) {
-        //             imgs[i].src = imgs[i].getAttribute('data-src');
-        //         }               
-        //     });
-        // };
+        window.onload = window.onscroll = function() {
+            const imgs = document.querySelectorAll('img');
+            imgs.forEach((item,i) => {
+                let bound = imgs[i].getBoundingClientRect();
+                console.log(bound);
+                const clientHeight = window.innerHeight;
+                if(bound.top <=clientHeight) {
+                    imgs[i].src = imgs[i].getAttribute('data-src');
+                }               
+            });
+        };
 
         /**
          *方法三：通过IntersectionObserver接口实现，ioes是intersectionObserver对象
          **/
         
-        window.onload = function () {
-            const io = new IntersectionObserver(ioes => {
-            ioes.forEach(ios => {
-                const el = ios.target;
-                const intersectionRatio1 = ios.intersectionRatio;
-                if(intersectionRatio1 > 0 && intersectionRatio1 <= 1) {
-                    console.log(intersectionRatio1);
-                    el.src = el.getAttribute('data-src');
-                }
-            });
-        });
-            const imgs = Array.from(document.querySelectorAll('img'));
-            imgs.forEach(item => {
-                io.observe(item);
-            });
-        }
+//         window.onload = function () {
+//             const io = new IntersectionObserver(ioes => {
+//             ioes.forEach(ios => {
+//                 const el = ios.target;
+//                 const intersectionRatio1 = ios.intersectionRatio;
+//                 if(intersectionRatio1 > 0 && intersectionRatio1 <= 1) {
+//                     console.log(intersectionRatio1);
+//                     el.src = el.getAttribute('data-src');
+//                 }
+//             });
+//         });
+//             const imgs = Array.from(document.querySelectorAll('img'));
+//             imgs.forEach(item => {
+//                 io.observe(item);
+//             });
+//         }
     </script>
 </body>
 
